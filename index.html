@@ -19,7 +19,6 @@
             justify-content: center;
             align-items: center;
             background: #0b0b1a;
-            /* 动态渐变背景 */
             background: radial-gradient(ellipse at 20% 50%, #0f0c29, #1a0a2e, #0b0b1a);
             overflow-x: hidden;
             padding: 20px;
@@ -41,7 +40,7 @@
         .game-box {
             position: relative;
             z-index: 1;
-            max-width: 1300px;
+            max-width: 1400px;
             width: 100%;
             padding: 30px 20px 40px;
         }
@@ -92,7 +91,7 @@
         /* ===== 游戏卡片网格 ===== */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 28px;
             margin-top: 10px;
         }
@@ -121,7 +120,6 @@
             justify-content: space-between;
         }
 
-        /* 卡片顶部光晕 */
         .game-card::before {
             content: '';
             position: absolute;
@@ -139,7 +137,6 @@
             opacity: 1;
         }
 
-        /* 卡片底部光晕 */
         .game-card::after {
             content: '';
             position: absolute;
@@ -158,14 +155,12 @@
             opacity: 1;
         }
 
-        /* 悬浮效果 */
         .game-card:hover {
             transform: translateY(-12px) scale(1.02);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 40px var(--glow-color, rgba(79, 172, 254, 0.15));
             border-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* 卡片内容 */
         .card-icon {
             font-size: 3.6rem;
             line-height: 1;
@@ -229,7 +224,6 @@
         }
 
         /* ===== 各游戏配色 ===== */
-        /* 1. 3D暗影收割者 */
         .card-shadow {
             --accent-color: #a855f7;
             --accent-secondary: #7c3aed;
@@ -239,7 +233,6 @@
             border-color: rgba(168, 85, 247, 0.25);
         }
 
-        /* 2. 星际防御者 */
         .card-stellar {
             --accent-color: #38bdf8;
             --accent-secondary: #0ea5e9;
@@ -249,7 +242,6 @@
             border-color: rgba(56, 189, 248, 0.25);
         }
 
-        /* 3. 射击 */
         .card-shooter {
             --accent-color: #fb7185;
             --accent-secondary: #e11d48;
@@ -259,7 +251,6 @@
             border-color: rgba(251, 113, 133, 0.25);
         }
 
-        /* 4. 午夜协议 */
         .card-midnight {
             --accent-color: #34d399;
             --accent-secondary: #059669;
@@ -267,6 +258,16 @@
         }
         .card-midnight .card-tag {
             border-color: rgba(52, 211, 153, 0.25);
+        }
+
+        /* 新增：3D射击游戏 */
+        .card-3dshooter {
+            --accent-color: #fb923c;
+            --accent-secondary: #ea580c;
+            --glow-color: rgba(251, 146, 60, 0.25);
+        }
+        .card-3dshooter .card-tag {
+            border-color: rgba(251, 146, 60, 0.25);
         }
 
         /* ===== 卡片内的装饰性光点 ===== */
@@ -300,18 +301,39 @@
             background: var(--accent-secondary, #7c3aed);
         }
 
-        /* ===== 底部信息 ===== */
+        /* ===== 底部信息（含邮箱） ===== */
         .footer {
             text-align: center;
             margin-top: 50px;
-            color: rgba(255, 255, 255, 0.15);
-            font-size: 0.8rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
             letter-spacing: 1px;
             font-weight: 300;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px 24px;
         }
 
-        .footer span {
-            color: rgba(255, 255, 255, 0.08);
+        .footer a {
+            color: rgba(255, 255, 255, 0.35);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .footer a:hover {
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .footer .divider {
+            opacity: 0.15;
+            user-select: none;
         }
 
         /* ===== 点击波纹 ===== */
@@ -344,7 +366,7 @@
             }
 
             .games-grid {
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 20px;
             }
 
@@ -413,6 +435,12 @@
             .orb-2 {
                 display: none;
             }
+
+            .footer {
+                font-size: 0.75rem;
+                flex-direction: column;
+                gap: 4px;
+            }
         }
 
         @media (max-width: 380px) {
@@ -461,16 +489,19 @@
         }
 
         .game-card:nth-child(1) {
-            animation-delay: 0.08s;
+            animation-delay: 0.06s;
         }
         .game-card:nth-child(2) {
-            animation-delay: 0.16s;
+            animation-delay: 0.12s;
         }
         .game-card:nth-child(3) {
-            animation-delay: 0.24s;
+            animation-delay: 0.18s;
         }
         .game-card:nth-child(4) {
-            animation-delay: 0.32s;
+            animation-delay: 0.24s;
+        }
+        .game-card:nth-child(5) {
+            animation-delay: 0.30s;
         }
 
         @keyframes cardFadeIn {
@@ -484,7 +515,6 @@
             }
         }
 
-        /* ===== 滚动条美化 ===== */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -499,7 +529,6 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* ===== 加载时的闪屏保护 ===== */
         .game-card {
             opacity: 0;
         }
@@ -510,22 +539,18 @@
 </head>
 <body>
 
-    <!-- ===== 星空画布 ===== -->
     <canvas id="stars-canvas"></canvas>
 
-    <!-- ===== 主容器 ===== -->
     <div class="game-box">
 
-        <!-- 头部 -->
         <header class="header">
             <div class="logo">🎮 游戏盒</div>
             <div class="subtitle">✦ 选择你的战场 ✦</div>
         </header>
 
-        <!-- 游戏卡片网格 -->
         <div class="games-grid">
 
-            <!-- ===== 1. 3D暗影收割者 → 1.html ===== -->
+            <!-- 1. 3D暗影收割者 → 1.html -->
             <a href="1.html" class="game-card card-shadow" data-game="shadow" target="_blank">
                 <div class="orb orb-1"></div>
                 <div class="orb orb-2"></div>
@@ -538,7 +563,7 @@
                 <span class="card-tag">▶ 进入游戏</span>
             </a>
 
-            <!-- ===== 2. 星际防御者 → 2.html ===== -->
+            <!-- 2. 星际防御者 → 2.html -->
             <a href="2.html" class="game-card card-stellar" data-game="stellar" target="_blank">
                 <div class="orb orb-1"></div>
                 <div class="orb orb-2"></div>
@@ -551,7 +576,7 @@
                 <span class="card-tag">▶ 进入游戏</span>
             </a>
 
-            <!-- ===== 3. 射击 → 3.html ===== -->
+            <!-- 3. 射击 → 3.html -->
             <a href="3.html" class="game-card card-shooter" data-game="shooter" target="_blank">
                 <div class="orb orb-1"></div>
                 <div class="orb orb-2"></div>
@@ -564,7 +589,7 @@
                 <span class="card-tag">▶ 进入游戏</span>
             </a>
 
-            <!-- ===== 4. 午夜协议 → 4.html ===== -->
+            <!-- 4. 午夜协议 → 4.html -->
             <a href="4.html" class="game-card card-midnight" data-game="midnight" target="_blank">
                 <div class="orb orb-1"></div>
                 <div class="orb orb-2"></div>
@@ -577,10 +602,25 @@
                 <span class="card-tag">▶ 进入游戏</span>
             </a>
 
+            <!-- 5. 新增：3D射击游戏 → 5.html -->
+            <a href="5.html" class="game-card card-3dshooter" data-game="shooter3d" target="_blank">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div>
+                    <div class="card-icon">🔫</div>
+                    <div class="card-title">3D射击游戏</div>
+                    <div class="card-title-en">3D Shooter</div>
+                    <div class="card-desc">沉浸式第一人称射击，在三维战场中精准打击目标。</div>
+                </div>
+                <span class="card-tag">▶ 进入游戏</span>
+            </a>
+
         </div>
 
-        <!-- 底部 -->
+        <!-- ===== 底部：邮箱 + 标语 ===== -->
         <div class="footer">
+            <span>📧 <a href="mailto:3880374029@qq.com">3880374029@qq.com</a></span>
+            <span class="divider">|</span>
             <span>✦ 选择你的游戏，开启冒险 ✦</span>
         </div>
 
@@ -652,7 +692,6 @@
                     stars[i].update();
                     stars[i].draw(time);
                 }
-                // 连接线
                 if (stars.length > 20) {
                     const step = Math.max(1, Math.floor(stars.length / 30));
                     for (let i = 0; i < stars.length - step; i += step) {
@@ -685,16 +724,13 @@
         })();
 
         // =====================================================
-        //  2. 卡片点击波纹效果（链接已直接写在 href 中）
+        //  2. 卡片点击波纹效果
         // =====================================================
         (function setupCards() {
             const cards = document.querySelectorAll('.game-card');
 
             cards.forEach((card) => {
-                // 波纹效果
                 card.addEventListener('click', function(e) {
-                    // 如果链接是 # 则阻止（但这里已经都是具体文件，无需额外处理）
-                    // 创建波纹
                     const rect = this.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
@@ -713,21 +749,19 @@
         })();
 
         // =====================================================
-        //  3. 键盘快捷键: 数字键 1-4 快速跳转
+        //  3. 键盘快捷键: 数字键 1-5 快速跳转
         // =====================================================
         document.addEventListener('keydown', (e) => {
             const key = e.key;
-            const map = { '1': 0, '2': 1, '3': 2, '4': 3 };
+            const map = { '1': 0, '2': 1, '3': 2, '4': 3, '5': 4 };
             if (key in map) {
                 const cards = document.querySelectorAll('.game-card');
                 const idx = map[key];
                 if (cards[idx]) {
-                    // 直接打开链接（新窗口）
                     const link = cards[idx].href;
                     if (link && link !== '#') {
                         window.open(link, '_blank');
                     } else {
-                        // 如果链接无效，给予视觉反馈
                         cards[idx].style.boxShadow = '0 0 60px var(--glow-color, rgba(255,255,255,0.3))';
                         setTimeout(() => { cards[idx].style.boxShadow = ''; }, 400);
                     }
