@@ -525,8 +525,8 @@
         <!-- 游戏卡片网格 -->
         <div class="games-grid">
 
-            <!-- ===== 1. 3D暗影收割者 ===== -->
-            <a href="#" class="game-card card-shadow" data-game="shadow" target="_blank">
+            <!-- ===== 1. 3D暗影收割者 → 1.html ===== -->
+            <a href="1.html" class="game-card card-shadow" data-game="shadow" target="_blank">
                 <div class="orb orb-1"></div>
                 <div class="orb orb-2"></div>
                 <div>
@@ -538,8 +538,8 @@
                 <span class="card-tag">▶ 进入游戏</span>
             </a>
 
-            <!-- ===== 2. 星际防御者 ===== -->
-            <a href="#" class="game-card card-stellar" data-game="stellar" target="_blank">
+            <!-- ===== 2. 星际防御者 → 2.html ===== -->
+            <a href="2.html" class="game-card card-stellar" data-game="stellar" target="_blank">
                 <div class="orb orb-1"></div>
                 <div class="orb orb-2"></div>
                 <div>
@@ -551,8 +551,8 @@
                 <span class="card-tag">▶ 进入游戏</span>
             </a>
 
-            <!-- ===== 3. 射击 ===== -->
-            <a href="#" class="game-card card-shooter" data-game="shooter" target="_blank">
+            <!-- ===== 3. 射击 → 3.html ===== -->
+            <a href="3.html" class="game-card card-shooter" data-game="shooter" target="_blank">
                 <div class="orb orb-1"></div>
                 <div class="orb orb-2"></div>
                 <div>
@@ -564,8 +564,8 @@
                 <span class="card-tag">▶ 进入游戏</span>
             </a>
 
-            <!-- ===== 4. 午夜协议 ===== -->
-            <a href="#" class="game-card card-midnight" data-game="midnight" target="_blank">
+            <!-- ===== 4. 午夜协议 → 4.html ===== -->
+            <a href="4.html" class="game-card card-midnight" data-game="midnight" target="_blank">
                 <div class="orb orb-1"></div>
                 <div class="orb orb-2"></div>
                 <div>
@@ -607,7 +607,6 @@
             class Star {
                 constructor() {
                     this.reset();
-                    // 随机亮度偏移，用于闪烁
                     this.twinkleSpeed = 0.005 + Math.random() * 0.02;
                     this.twinkleOffset = Math.random() * Math.PI * 2;
                 }
@@ -622,7 +621,6 @@
                 update() {
                     this.x += this.dx;
                     this.y += this.dy;
-                    // 边界循环
                     if (this.x < 0) this.x = width;
                     if (this.x > width) this.x = 0;
                     if (this.y < 0) this.y = height;
@@ -635,7 +633,6 @@
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
                     ctx.fill();
-                    // 微光晕
                     if (this.radius > 1.2) {
                         ctx.shadowColor = 'rgba(255,255,255,0.3)';
                         ctx.shadowBlur = 6;
@@ -651,12 +648,11 @@
 
             function animate(time) {
                 ctx.clearRect(0, 0, width, height);
-                // 绘制连接线 (较近的星星之间)
                 for (let i = 0; i < stars.length; i++) {
                     stars[i].update();
                     stars[i].draw(time);
                 }
-                // 绘制一些极淡的连接线 (性能优化，只对部分星星)
+                // 连接线
                 if (stars.length > 20) {
                     const step = Math.max(1, Math.floor(stars.length / 30));
                     for (let i = 0; i < stars.length - step; i += step) {
@@ -680,7 +676,6 @@
             }
             requestAnimationFrame(animate);
 
-            // 窗口变化时重置星星位置
             window.addEventListener('resize', () => {
                 stars.forEach(s => {
                     s.x = Math.random() * width;
@@ -690,43 +685,15 @@
         })();
 
         // =====================================================
-        //  2. 卡片点击波纹效果 + 跳转配置
+        //  2. 卡片点击波纹效果（链接已直接写在 href 中）
         // =====================================================
         (function setupCards() {
             const cards = document.querySelectorAll('.game-card');
 
-            // ----- 在这里修改你的游戏链接 ↓ -----
-            const GAME_LINKS = {
-                shadow: 'https://example.com/3d-shadow-reaper', // 替换为 3D暗影收割者 的链接
-                stellar: 'https://example.com/star-defender', // 替换为 星际防御者 的链接
-                shooter: 'https://example.com/shooter', // 替换为 射击 的链接
-                midnight: 'https://example.com/midnight-protocol', // 替换为 午夜协议 的链接
-            };
-            // ----- 修改结束 ↑ -----
-
             cards.forEach((card) => {
-                const gameKey = card.dataset.game;
-                // 如果配置了链接则使用，否则保留 href="#"
-                if (gameKey && GAME_LINKS[gameKey]) {
-                    card.href = GAME_LINKS[gameKey];
-                }
-
                 // 波纹效果
                 card.addEventListener('click', function(e) {
-                    // 如果链接是 # 则阻止默认行为（避免页面跳动）
-                    if (this.href === '#' || this.href.endsWith('#')) {
-                        e.preventDefault();
-                        // 可以加一个提示
-                        console.warn('请配置游戏链接！在 GAME_LINKS 中修改。');
-                        // 简单反馈：闪烁
-                        this.style.transition = 'box-shadow 0.15s';
-                        this.style.boxShadow = '0 0 60px var(--glow-color, rgba(255,255,255,0.3))';
-                        setTimeout(() => {
-                            this.style.boxShadow = '';
-                        }, 300);
-                        return;
-                    }
-
+                    // 如果链接是 # 则阻止（但这里已经都是具体文件，无需额外处理）
                     // 创建波纹
                     const rect = this.getBoundingClientRect();
                     const x = e.clientX - rect.left;
@@ -741,16 +708,8 @@
                     setTimeout(() => ripple.remove(), 600);
                 });
 
-                // 卡片出场后移除加载状态
                 card.classList.add('loaded');
             });
-
-            // 如果所有链接都是 #，在控制台提示
-            const allPlaceholder = Array.from(cards).every(c => c.href === '#' || c.href.endsWith('#'));
-            if (allPlaceholder) {
-                console.log('%c🎮 游戏盒提示', 'font-size:18px; font-weight:bold;');
-                console.log('%c请在代码中部的 GAME_LINKS 对象里配置四个游戏的真实链接。', 'font-size:14px; color:#a855f7;');
-            }
         })();
 
         // =====================================================
@@ -762,11 +721,16 @@
             if (key in map) {
                 const cards = document.querySelectorAll('.game-card');
                 const idx = map[key];
-                if (cards[idx] && cards[idx].href && !cards[idx].href.endsWith('#')) {
-                    window.open(cards[idx].href, '_blank');
-                } else if (cards[idx]) {
-                    cards[idx].style.boxShadow = '0 0 60px var(--glow-color, rgba(255,255,255,0.3))';
-                    setTimeout(() => { cards[idx].style.boxShadow = ''; }, 400);
+                if (cards[idx]) {
+                    // 直接打开链接（新窗口）
+                    const link = cards[idx].href;
+                    if (link && link !== '#') {
+                        window.open(link, '_blank');
+                    } else {
+                        // 如果链接无效，给予视觉反馈
+                        cards[idx].style.boxShadow = '0 0 60px var(--glow-color, rgba(255,255,255,0.3))';
+                        setTimeout(() => { cards[idx].style.boxShadow = ''; }, 400);
+                    }
                 }
             }
         });
